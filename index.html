@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 กิจกรรมน่าไป กรุงเทพฯ | 16-22 ส.ค. 68</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #fecfef 75%, #fecfef 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        .dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #16213e 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+            }
+        }
+        
+        .event-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .dark-mode .event-card {
+            background: rgba(30, 30, 60, 0.9);
+            color: white;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            z-index: 10;
+        }
+        
+        .hero-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .neon-text {
+            animation: neon 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neon {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073;
+            }
+            to {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e60073, 0 0 20px #e60073;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg transition-all duration-500">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-city text-2xl text-purple-600"></i>
+                <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Bangkok Events</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="filterBtn" class="px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition">
+                    <i class="fas fa-filter mr-2"></i>Filter
+                </button>
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 transition">
+                    <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col justify-center items-center px-4 pt-20">
+        <div class="text-center floating">
+            <h1 class="text-5xl md:text-7xl font-bold text-white hero-text mb-4 neon-text">
+                14 กิจกรรมน่าไป
+            </h1>
+            <p class="text-2xl md:text-3xl text-white hero-text mb-2">
+                วันที่ 16 - 22 สิงหาคม 2568
+            </p>
+            <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                ชวนคนกรุงเทพฯ ออกมาใช้ชีวิตร่วมกันในพื้นที่สาธารณะ
+            </p>
+            <button id="exploreBtn" class="px-8 py-4 bg-white text-purple-600 rounded-full text-lg font-semibold hover:scale-105 transition-transform pulse-glow">
+                <i class="fas fa-compass mr-2"></i>สำรวจกิจกรรม
+            </button>
+        </div>
+        <div class="scroll-indicator mt-12 text-white">
+            <i class="fas fa-chevron-down text-3xl"></i>
+        </div>
+    </section>
+
+    <!-- Filter Section (Hidden by default) -->
+    <div id="filterSection" class="hidden fixed top-20 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg z-40 p-4">
+        <div class="container mx-auto flex flex-wrap gap-2 justify-center">
+            <button class="filter-tag px-4 py-2 bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition" data-category="all">
+                ทั้งหมด
+            </button>
+            <button class="filter-tag px-4 py-2 bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition" data-category="market">
+                ตลาด/แฟร์
+            </button>
+            <button class="filter-tag px-4 py-2 bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition" data-category="sport">
+                กีฬา/สุขภาพ
+            </button>
+            <button class="filter-tag px-4 py-2 bg-red-100 text-red-700 rounded-full hover:bg-red-200 transition" data-category="culture">
+                วัฒนธรรม
+            </button>
+            <button class="filter-tag px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full hover:bg-yellow-200 transition" data-category="entertainment">
+                บันเทิง
+            </button>
+        </div>
+    </div>
+
+    <!-- Events Grid -->
+    <section id="eventsSection" class="container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">
+            <i class="fas fa-calendar-alt mr-3"></i>กิจกรรมทั้งหมด
+        </h2>
+        <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Events will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button id="backToTop" class="hidden p-4 bg-purple-600 text-white rounded-full shadow-lg hover:bg-purple-700 transition">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loader" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="loader"></div>
+    </div>
+
+    <script>
+        // Events Data
+        const events = [
+            {
+                id: 1,
+                title: "Step Into Swing Vol.2",
+                date: "17 ส.ค.",
+                time: "16:00 - 19:00",
+                location: "สถานีรถไฟหัวลำโพง",
+                category: "entertainment",
+                icon: "music",
+                color: "purple"
+            },
+            {
+                id: 2,
+                title: "THE DECORNERY Market",
+                date: "16-17 ส.ค.",
+                time: "10:00 - 19:00",
+                location: "GalileOasis",
+                category: "market",
+                icon: "shopping-bag",
+                color: "blue"
+            },
+            {
+                id: 3,
+                title: "สีสันบางพลัด",
+                date: "16-17 ส.ค.",
+                time: "ตลอดวัน",
+                location: "วัดเปาโรหิตย์ และตลาดกรุงธน",
+                category: "culture",
+                icon: "palette",
+                color: "red"
+            },
+            {
+                id: 4,
+                title: "OSOTHO & FRIENDS Garden Fair",
+                date: "15-17 ส.ค.",
+                time: "ตลอดวัน",
+                location: "Museum Siam",
+                category: "market",
+                icon: "leaf",
+                color: "green"
+            },
+            {
+                id: 5,
+                title: "Awakening Song Wat 2025",
+                date: "8-17 ส.ค.",
+                time: "18:00 เป็นต้นไป",
+                location: "ย่านทรงวาด",
+                category: "culture",
+                icon: "moon",
+                color: "indigo"
+            },
+            {
+                id: 6,
+                title: "ช่างชุ่ยตลาดไฟฉาย",
+                date: "15-17 ส.ค.",
+                time: "18:00 - 00:00",
+                location: "ช่างชุ่ย",
+                category: "market",
+                icon: "lightbulb",
+                color: "yellow"
+            },
+            {
+                id: 7,
+                title: "What the Doc! (WTD!)",
+                date: "22-31 ส.ค.",
+                time: "ตลอดวัน",
+                location: "โรงภาพยนตร์ทั่วกรุงเทพ",
+                category: "entertainment",
+                icon: "film",
+                color: "pink"
+            },
+            {
+                id: 8,
+                title: "Character Fest Thailand 2025",
+                date: "14-17 ส.ค.",
+                time: "ตลอดวัน",
+                location: "centralwOrld ชั้น 1",
+                category: "entertainment",
+                icon: "star",
+                color: "orange"
+            },
+            {
+                id: 9,
+                title: "Repair Café ครั้งที่ 7",
+                date: "16 ส.ค.",
+                time: "13:00 - 17:00",
+                location: "บ้านสวนสุดาวรรณ",
+                category: "culture",
+                icon: "tools",
+                color: "gray"
+            },
+            {
+                id: 10,
+                title: "China Xperience",
+                date: "12-17 ส.ค.",
+                time: "ตลอดวัน",
+                location: "TK Park",
+                category: "culture",
+                icon: "globe-asia",
+                color: "red"
+            },
+            {
+                id: 11,
+                title: "CCRC Saturday Strides",
+                date: "16 ส.ค.",
+                time: "6:30 - 7:30",
+                location: "สวนเบญจกิติ",
+                category: "sport",
+                icon: "running",
+                color: "green"
+            },
+            {
+                id: 12,
+                title: "YPS SELF LOVE PLAYGROUND",
+                date: "17 ส.ค.",
+                time: "6:30 - 9:30",
+                location: "Polo Football Park สวนลุมพินี",
+                category: "sport",
+                icon: "heart",
+                color: "pink"
+            },
+            {
+                id: 13,
+                title: "Move Breathe Heal",
+                date: "16 ส.ค.",
+                time: "6:30",
+                location: "ลานอัฒจันทร์กลาง สวนเบญจกิติ",
+                category: "sport",
+                icon: "spa",
+                color: "teal"
+            },
+            {
+                id: 14,
+                title: "Sabai Sunday Run",
+                date: "17 ส.ค.",
+                time: "7:30",
+                location: "% Arabica Bangkok QSNCC",
+                category: "sport",
+                icon: "dumbbell",
+                color: "blue"
+            }
+        ];
+
+        // Color mappings
+        const colorClasses = {
+            purple: 'bg-purple-500',
+            blue: 'bg-blue-500',
+            red: 'bg-red-500',
+            green: 'bg-green-500',
+            indigo: 'bg-indigo-500',
+            yellow: 'bg-yellow-500',
+            pink: 'bg-pink-500',
+            orange: 'bg-orange-500',
+            gray: 'bg-gray-500',
+            teal: 'bg-teal-500'
+        };
+
+        // Category badges
+        const categoryBadges = {
+            market: { text: 'ตลาด', color: 'bg-blue-500' },
+            sport: { text: 'กีฬา', color: 'bg-green-500' },
+            culture: { text: 'วัฒนธรรม', color: 'bg-red-500' },
+            entertainment: { text: 'บันเทิง', color: 'bg-yellow-500' }
+        };
+
+        // DOM Elements
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const loader = document.getElementById('loader');
+        const eventsGrid = document.getElementById('eventsGrid');
+        const exploreBtn = document.getElementById('exploreBtn');
+        const backToTop = document.getElementById('backToTop');
+        const filterBtn = document.getElementById('filterBtn');
+        const filterSection = document.getElementById('filterSection');
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Filter Toggle
+        filterBtn.addEventListener('click', () => {
+            filterSection.classList.toggle('hidden');
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                const category = tag.dataset.category;
+                filterEvents(category);
+                
+                // Update active state
+                document.querySelectorAll('.filter-tag').forEach(t => {
+                    t.classList.remove('ring-2', 'ring-purple-500');
+                });
+                tag.classList.add('ring-2', 'ring-purple-500');
+            });
+        });
+
+        // Filter events
+        function filterEvents(category) {
+            const cards = document.querySelectorAll('.event-card-wrapper');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.classList.add('slide-in');
+                    }, 100);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Render Events
+        function renderEvents() {
+            eventsGrid.innerHTML = '';
+            events.forEach((event, index) => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card-wrapper slide-in';
+                eventCard.dataset.category = event.category;
+                eventCard.style.animationDelay = `${index * 0.1}s`;
+                
+                const badge = categoryBadges[event.category];
+                
+                eventCard.innerHTML = `
+                    <div class="event-card rounded-xl p-6 relative">
+                        <div class="category-badge ${badge.color} text-white px-3 py-1 rounded-full text-xs font-semibold">
+                            ${badge.text}
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <div class="${colorClasses[event.color]} w-12 h-12 rounded-full flex items-center justify-center text-white mr-4">
+                                <i class="fas fa-${event.icon}"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold flex-1">${event.title}</h3>
+                        </div>
+                        <div class="space-y-2 text-gray-600 dark:text-gray-300">
+                            <p class="flex items-center">
+                                <i class="fas fa-calendar-day mr-2 text-purple-500"></i>
+                                ${event.date}
+                            </p>
+                            <p class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-purple-500"></i>
+                                ${event.time}
+                            </p>
+                            <p class="flex items-center">
+                                <i class="fas fa-map-marker-alt mr-2 text-purple-500"></i>
+                                ${event.location}
+                            </p>
+                        </div>
+                        <button class="mt-4 w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition shimmer">
+                            ดูรายละเอียด
+                        </button>
+                    </div>
+                `;
+                eventsGrid.appendChild(eventCard);
+            });
+        }
+
+        // Smooth scroll to events
+        exploreBtn.addEventListener('click', () => {
+            document.getElementById('eventsSection').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initialize
+        setTimeout(() => {
+            loader.style.display = 'none';
+            renderEvents();
+        }, 1000);
+
+        // Add interactive hover sound effect (visual feedback)
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'scale(1.05)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'scale(1)';
+                });
+            });
+        });
+
+        // Add touch support for mobile
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndY < touchStartY - 50) {
+                // Swipe up
+                document.getElementById('eventsSection').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Add parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.floating');
+            if (parallax) {
+                const speed = 0.5;
+                parallax.style.transform = `translateY(${scrolled * speed}px)`;
+            }
+        });
+
+        // Auto-rotate gradient background
+        let hue = 0;
+        setInterval(() => {
+            hue = (hue + 1) % 360;
+            if (!body.classList.contains('dark-mode')) {
+                document.documentElement.style.setProperty('--gradient-hue', hue);
+            }
+        }, 100);
+    </script>
+</body>
+</html>
