@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;900&family=Prompt:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;900&family=Prompt:wght@300;400;500;600;700;900&display=swap');
         
         * {
             margin: 0;
@@ -22,6 +22,7 @@
             font-family: 'Prompt', 'Kanit', sans-serif;
             overflow-x: hidden;
             position: relative;
+            background: #0a0a0a;
         }
         
         #particles-js {
@@ -30,7 +31,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: 1;
         }
         
         #three-container {
@@ -39,176 +40,207 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            opacity: 0.3;
+            z-index: 0;
+            opacity: 0.2;
         }
         
-        .mega-gradient {
-            background: linear-gradient(270deg, #ff006e, #8338ec, #3a86ff, #06bdc1, #f72585, #b5179e, #7209b7, #560bad, #480ca8, #3a0ca3, #3f37c9, #4361ee, #4895ef, #4cc9f0);
-            background-size: 2800% 2800%;
-            animation: megaGradient 30s ease infinite;
+        .dark-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #1a1a2e 100%);
+            background-size: 400% 400%;
+            animation: darkGradientShift 20s ease infinite;
         }
         
-        @keyframes megaGradient {
+        @keyframes darkGradientShift {
             0%, 100% { background-position: 0% 50%; }
-            25% { background-position: 50% 100%; }
             50% { background-position: 100% 50%; }
-            75% { background-position: 50% 0%; }
         }
         
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
+        .glass-card-dark {
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         }
         
-        .neon-glow {
-            animation: neonPulse 2s ease-in-out infinite alternate;
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
         
-        @keyframes neonPulse {
-            from {
-                text-shadow: 
-                    0 0 10px #fff,
-                    0 0 20px #fff,
-                    0 0 30px #f72585,
-                    0 0 40px #f72585,
-                    0 0 50px #f72585,
-                    0 0 60px #f72585,
-                    0 0 70px #f72585;
-            }
-            to {
-                text-shadow: 
-                    0 0 5px #fff,
-                    0 0 10px #fff,
-                    0 0 15px #b5179e,
-                    0 0 20px #b5179e,
-                    0 0 25px #b5179e,
-                    0 0 30px #b5179e,
-                    0 0 35px #b5179e;
-            }
+        .text-neon-white {
+            color: #ffffff;
+            text-shadow: 
+                0 0 5px #ffffff,
+                0 0 10px #ffffff,
+                0 0 15px #ffffff,
+                0 0 20px #ff00ff,
+                0 0 30px #ff00ff,
+                0 0 40px #ff00ff;
         }
         
-        .holographic {
-            background: linear-gradient(45deg, 
-                rgba(255, 0, 150, 0.3),
-                rgba(0, 255, 255, 0.3),
-                rgba(255, 0, 150, 0.3),
-                rgba(255, 255, 0, 0.3),
-                rgba(0, 255, 0, 0.3),
-                rgba(0, 100, 255, 0.3),
-                rgba(255, 0, 255, 0.3)
-            );
+        .text-gradient-vibrant {
+            background: linear-gradient(135deg, #00ffff, #ff00ff, #ffff00, #00ffff);
             background-size: 200% 200%;
-            animation: holographic 3s ease infinite;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 3s ease infinite;
+            filter: brightness(1.5);
         }
         
-        @keyframes holographic {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .event-card-3d {
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            position: relative;
-        }
-        
-        .event-card-3d:hover {
-            transform: rotateY(10deg) rotateX(-10deg) scale(1.05);
-        }
-        
-        .floating-element {
-            animation: float3D 6s ease-in-out infinite;
-        }
-        
-        @keyframes float3D {
-            0%, 100% { 
-                transform: translateY(0px) translateZ(0px) rotateX(0deg);
-            }
-            25% { 
-                transform: translateY(-20px) translateZ(20px) rotateX(2deg);
-            }
-            75% { 
-                transform: translateY(10px) translateZ(-10px) rotateX(-2deg);
-            }
-        }
-        
-        .glitch {
-            position: relative;
-            animation: glitch 2s infinite;
-        }
-        
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .glitch::before {
-            animation: glitch-1 0.5s infinite;
-            color: #ff00ff;
-            z-index: -1;
-        }
-        
-        .glitch::after {
-            animation: glitch-2 0.5s infinite;
-            color: #00ffff;
-            z-index: -2;
-        }
-        
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-        }
-        
-        @keyframes glitch-1 {
-            0%, 100% { clip-path: inset(0 0 0 0); }
-            25% { clip-path: inset(10% 0 50% 0); }
-            50% { clip-path: inset(50% 0 20% 0); }
-            75% { clip-path: inset(30% 0 30% 0); }
-        }
-        
-        @keyframes glitch-2 {
-            0%, 100% { clip-path: inset(0 0 0 0); }
-            25% { clip-path: inset(50% 0 10% 0); }
-            50% { clip-path: inset(20% 0 50% 0); }
-            75% { clip-path: inset(40% 0 40% 0); }
-        }
-        
-        .cyber-grid {
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 10s linear infinite;
-        }
-        
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-        
-        .aurora {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #fecfef 75%, #667eea 100%);
-            background-size: 400% 400%;
-            animation: aurora 20s ease infinite;
-            opacity: 0.5;
-        }
-        
-        @keyframes aurora {
+        @keyframes gradientMove {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+        }
+        
+        .event-card-premium {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 240, 255, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card-premium::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06bdc1, #ff006e);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: borderGradient 6s ease infinite;
+            border-radius: inherit;
+        }
+        
+        @keyframes borderGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .event-card-premium:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.4);
+        }
+        
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 
+                3px 3px 0px #ff00ff,
+                6px 6px 0px #00ffff,
+                9px 9px 20px rgba(255, 255, 255, 0.5);
+            letter-spacing: -2px;
+        }
+        
+        .subtitle-glow {
+            color: #ffffff;
+            font-weight: 600;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 0, 255, 0.6),
+                0 0 30px rgba(0, 255, 255, 0.4);
+        }
+        
+        .button-neon {
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 110, 0.5),
+                0 0 40px rgba(131, 56, 236, 0.3);
+        }
+        
+        .button-neon:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 110, 0.7),
+                0 0 60px rgba(131, 56, 236, 0.5);
+        }
+        
+        .button-neon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .button-neon:hover::before {
+            left: 100%;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .section-bg-dark {
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+        }
+        
+        .card-title {
+            color: #1a1a2e;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        .card-text {
+            color: #333333;
+            font-weight: 500;
+        }
+        
+        .icon-gradient {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .badge-premium {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            box-shadow: 0 4px 10px rgba(245, 87, 108, 0.3);
+        }
+        
+        .nav-glass {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .overlay-dark {
+            background: linear-gradient(180deg, 
+                rgba(0, 0, 0, 0.7) 0%, 
+                rgba(0, 0, 0, 0.4) 50%, 
+                rgba(0, 0, 0, 0.7) 100%);
         }
         
         .matrix-rain {
@@ -219,7 +251,8 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
-            z-index: -1;
+            z-index: 0;
+            opacity: 0.1;
         }
         
         .matrix-rain span {
@@ -227,8 +260,8 @@
             top: -100px;
             font-family: monospace;
             font-size: 10px;
-            color: #0f0;
-            text-shadow: 0 0 5px #0f0;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
             animation: matrixFall linear infinite;
         }
         
@@ -238,112 +271,46 @@
             }
         }
         
-        .ribbon-banner {
-            position: relative;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 1rem 3rem;
-            margin: 2rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulseDot 2s infinite;
+            margin-right: 8px;
         }
         
-        .ribbon-banner::before,
-        .ribbon-banner::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            border: 20px solid transparent;
-        }
-        
-        .ribbon-banner::before {
-            left: -40px;
-            border-right-color: #667eea;
-            transform: translateY(-50%);
-        }
-        
-        .ribbon-banner::after {
-            right: -40px;
-            border-left-color: #764ba2;
-            transform: translateY(-50%);
-        }
-        
-        .morphing-shape {
-            animation: morph 8s ease-in-out infinite;
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-        }
-        
-        @keyframes morph {
+        @keyframes pulseDot {
             0%, 100% {
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: scale(1);
+                opacity: 1;
             }
             50% {
-                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                transform: scale(1.5);
+                opacity: 0.5;
             }
         }
         
-        .liquid-button {
-            position: relative;
-            padding: 20px 40px;
-            text-transform: uppercase;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.3s;
+        .text-shadow-strong {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
         
-        .liquid-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #00ffff;
+            padding: 1rem;
+            margin: 1rem 0;
         }
         
-        .liquid-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .parallax-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            mix-blend-mode: difference;
-        }
-        
-        .cursor-grow {
-            width: 40px;
-            height: 40px;
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
         }
     </style>
 </head>
-<body class="mega-gradient cyber-grid">
-    <!-- Custom Cursor -->
-    <div class="custom-cursor" id="cursor"></div>
-    
+<body class="dark-gradient">
     <!-- Matrix Rain Effect -->
     <div class="matrix-rain" id="matrixRain"></div>
     
@@ -353,104 +320,111 @@
     <!-- Three.js Container -->
     <div id="three-container"></div>
     
-    <!-- Aurora Effect Overlay -->
-    <div class="aurora fixed inset-0 pointer-events-none"></div>
-    
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-card">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <nav class="fixed top-0 w-full z-50 nav-glass">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="morphing-shape w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                    <i class="fas fa-city text-white"></i>
+                <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-city text-white text-xl"></i>
                 </div>
-                <span class="text-2xl font-bold neon-glow">Bangkok Events</span>
+                <span class="text-2xl font-bold text-white">Bangkok Events</span>
             </div>
             <div class="flex items-center space-x-4">
-                <div class="flex space-x-2">
-                    <a href="https://visit.bangkok.go.th/th/festival-calendar" target="_blank" class="liquid-button text-sm py-2 px-4">
-                        <i class="fas fa-external-link-alt mr-2"></i>Visit Bangkok
-                    </a>
-                </div>
+                <span class="pulse-dot"></span>
+                <span class="text-white font-medium hidden md:block">LIVE</span>
+                <a href="https://visit.bangkok.go.th/th/festival-calendar" target="_blank" 
+                   class="button-neon text-sm md:text-base">
+                    <i class="fas fa-external-link-alt mr-2"></i>Visit Bangkok
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section with Main Image -->
-    <section class="min-h-screen flex flex-col justify-center items-center px-4 pt-20 relative">
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col justify-center items-center px-4 pt-20 relative z-10">
         <div class="absolute inset-0 overflow-hidden">
             <img src="https://lh5.googleusercontent.com/d/1HBEgUFP-DyhCBCOZNhAHARrenLgjqIYG" 
                  alt="Bangkok Events" 
-                 class="w-full h-full object-cover opacity-30"
+                 class="w-full h-full object-cover opacity-20"
                  onerror="this.style.display='none'">
+            <div class="overlay-dark absolute inset-0"></div>
         </div>
         
-        <div class="text-center floating-element z-10 relative">
-            <h1 class="text-6xl md:text-8xl font-black text-white mb-4 glitch" data-text="14 กิจกรรมน่าไป">
+        <div class="text-center floating z-10 relative">
+            <h1 class="hero-title mb-6">
                 14 กิจกรรมน่าไป
             </h1>
-            <div class="ribbon-banner mx-auto max-w-2xl mb-8">
-                <p class="text-2xl md:text-3xl font-bold">
+            
+            <div class="glass-card-dark inline-block px-8 py-4 rounded-full mb-8">
+                <p class="text-2xl md:text-3xl font-bold text-gradient-vibrant">
                     16 - 22 สิงหาคม 2568
                 </p>
             </div>
-            <p class="text-xl md:text-2xl text-white mb-8 holographic p-4 rounded-xl max-w-3xl mx-auto">
-                ชวนคนกรุงเทพฯ ออกมาใช้ชีวิตร่วมกันในพื้นที่สาธารณะ
-                <br/>กับกิจกรรมสุดพิเศษทั่วกรุงเทพมหานคร
-            </p>
-            <div class="flex justify-center space-x-4">
-                <div class="morphing-shape bg-gradient-to-r from-yellow-400 to-pink-500 p-1">
-                    <button id="exploreBtn" class="bg-black text-white px-8 py-4 font-bold text-lg">
-                        <i class="fas fa-rocket mr-2"></i>สำรวจกิจกรรม
-                    </button>
-                </div>
+            
+            <div class="highlight-box max-w-3xl mx-auto mb-8">
+                <p class="text-xl md:text-2xl text-white font-medium">
+                    ชวนคนกรุงเทพฯ ออกมาใช้ชีวิตร่วมกันในพื้นที่สาธารณะ
+                    <br/>
+                    <span class="text-gradient-vibrant">กับกิจกรรมสุดพิเศษทั่วกรุงเทพมหานคร</span>
+                </p>
             </div>
+            
+            <button id="exploreBtn" class="button-neon">
+                <i class="fas fa-rocket mr-2"></i>สำรวจกิจกรรม
+            </button>
         </div>
         
-        <div class="absolute bottom-10 animate-bounce">
-            <i class="fas fa-chevron-down text-4xl text-white neon-glow"></i>
+        <div class="absolute bottom-10 animate-bounce z-10">
+            <i class="fas fa-chevron-down text-4xl text-white text-neon-white"></i>
         </div>
     </section>
 
-    <!-- Events Grid Section -->
-    <section id="eventsSection" class="container mx-auto px-4 py-20 relative z-10">
-        <div class="text-center mb-16">
-            <h2 class="text-5xl md:text-6xl font-black text-white mb-4 neon-glow">
-                <i class="fas fa-star mr-3"></i>กิจกรรมทั้งหมด
-            </h2>
-            <p class="text-xl text-white/90">พบกับ 14 กิจกรรมสุดพิเศษ</p>
-        </div>
-        
-        <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <!-- Events will be loaded here -->
+    <!-- Events Section -->
+    <section id="eventsSection" class="relative z-10 py-20 section-bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-black text-white mb-4">
+                    <span class="text-gradient-vibrant">กิจกรรมทั้งหมด</span>
+                </h2>
+                <p class="text-xl text-white subtitle-glow">พบกับ 14 กิจกรรมสุดพิเศษ</p>
+            </div>
+            
+            <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Events will be loaded here -->
+            </div>
         </div>
     </section>
 
     <!-- Footer Section -->
-    <footer class="glass-card mt-20 py-10">
+    <footer class="glass-card-dark border-t border-white/10 py-12 relative z-10">
         <div class="container mx-auto px-4 text-center">
-            <div class="mb-6">
-                <img src="https://lh5.googleusercontent.com/d/1HBEgUFP-DyhCBCOZNhAHARrenLgjqIYG" 
-                     alt="Bangkok Events Footer" 
-                     class="w-full max-w-md mx-auto rounded-xl opacity-80"
-                     onerror="this.style.display='none'">
+            <div class="mb-8">
+                <div class="glass-card-dark inline-block p-2 rounded-xl">
+                    <img src="https://lh5.googleusercontent.com/d/1HBEgUFP-DyhCBCOZNhAHARrenLgjqIYG" 
+                         alt="Bangkok Events Footer" 
+                         class="w-full max-w-md rounded-lg"
+                         onerror="this.style.display='none'">
+                </div>
             </div>
-            <p class="text-white text-lg mb-4">
+            <p class="text-white text-lg mb-6 subtitle-glow">
                 <i class="fas fa-map-marker-alt mr-2 text-pink-400"></i>
                 กรุงเทพมหานคร - เมืองแห่งกิจกรรมและความสนุก
             </p>
-            <div class="flex justify-center space-x-6 text-white">
-                <a href="https://visit.bangkok.go.th" target="_blank" class="hover:text-pink-400 transition">
-                    <i class="fas fa-globe text-2xl"></i>
+            <div class="flex justify-center space-x-6">
+                <a href="https://visit.bangkok.go.th" target="_blank" 
+                   class="text-white hover:text-gradient-vibrant transition transform hover:scale-110">
+                    <i class="fas fa-globe text-3xl"></i>
                 </a>
-                <a href="https://www.facebook.com/share/19YmTEyjqf/" target="_blank" class="hover:text-blue-400 transition">
-                    <i class="fab fa-facebook text-2xl"></i>
+                <a href="https://www.facebook.com/share/19YmTEyjqf/" target="_blank" 
+                   class="text-white hover:text-gradient-vibrant transition transform hover:scale-110">
+                    <i class="fab fa-facebook text-3xl"></i>
                 </a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Events Data with images
+        // Events Data
         const events = [
             {
                 id: 1,
@@ -608,7 +582,15 @@
             }
         ];
 
-        // Initialize Three.js Background
+        // Category colors
+        const categoryColors = {
+            entertainment: 'บันเทิง',
+            market: 'ตลาด/แฟร์',
+            culture: 'วัฒนธรรม',
+            sport: 'กีฬา/สุขภาพ'
+        };
+
+        // Initialize Three.js
         function initThreeJS() {
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -617,17 +599,15 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.getElementById('three-container').appendChild(renderer.domElement);
             
-            // Create floating geometries
             const geometries = [];
-            const materials = [];
             
-            for(let i = 0; i < 50; i++) {
+            for(let i = 0; i < 30; i++) {
                 const geometry = new THREE.IcosahedronGeometry(Math.random() * 2 + 0.5, 0);
                 const material = new THREE.MeshBasicMaterial({
-                    color: new THREE.Color(`hsl(${Math.random() * 360}, 100%, 50%)`),
+                    color: new THREE.Color(`hsl(${Math.random() * 60 + 240}, 100%, 50%)`),
                     wireframe: true,
                     transparent: true,
-                    opacity: 0.3
+                    opacity: 0.2
                 });
                 
                 const mesh = new THREE.Mesh(geometry, material);
@@ -637,9 +617,6 @@
                     (Math.random() - 0.5) * 50
                 );
                 
-                mesh.rotation.x = Math.random() * Math.PI;
-                mesh.rotation.y = Math.random() * Math.PI;
-                
                 scene.add(mesh);
                 geometries.push(mesh);
             }
@@ -648,13 +625,10 @@
             
             function animate() {
                 requestAnimationFrame(animate);
-                
                 geometries.forEach((mesh, i) => {
-                    mesh.rotation.x += 0.001 * (i + 1);
-                    mesh.rotation.y += 0.001 * (i + 1);
-                    mesh.position.y += Math.sin(Date.now() * 0.001 + i) * 0.01;
+                    mesh.rotation.x += 0.001 * (i % 3 + 1);
+                    mesh.rotation.y += 0.001 * (i % 3 + 1);
                 });
-                
                 renderer.render(scene, camera);
             }
             
@@ -671,21 +645,21 @@
         function initParticles() {
             particlesJS('particles-js', {
                 particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    number: { value: 50, density: { enable: true, value_area: 800 } },
                     color: { value: '#ffffff' },
                     shape: { type: 'circle' },
-                    opacity: { value: 0.5, random: true },
-                    size: { value: 3, random: true },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 2, random: true },
                     line_linked: {
                         enable: true,
                         distance: 150,
                         color: '#ffffff',
-                        opacity: 0.4,
+                        opacity: 0.2,
                         width: 1
                     },
                     move: {
                         enable: true,
-                        speed: 2,
+                        speed: 1,
                         direction: 'none',
                         random: false,
                         straight: false,
@@ -696,7 +670,7 @@
                 interactivity: {
                     detect_on: 'canvas',
                     events: {
-                        onhover: { enable: true, mode: 'repulse' },
+                        onhover: { enable: true, mode: 'grab' },
                         onclick: { enable: true, mode: 'push' },
                         resize: true
                     }
@@ -708,60 +682,54 @@
         // Matrix Rain Effect
         function createMatrixRain() {
             const matrixContainer = document.getElementById('matrixRain');
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZกขคงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ0123456789';
+            const chars = '01';
             
-            for(let i = 0; i < 30; i++) {
+            for(let i = 0; i < 20; i++) {
                 const span = document.createElement('span');
                 span.textContent = chars[Math.floor(Math.random() * chars.length)];
                 span.style.left = Math.random() * 100 + '%';
                 span.style.animationDuration = Math.random() * 10 + 5 + 's';
                 span.style.animationDelay = Math.random() * 5 + 's';
-                span.style.opacity = Math.random() * 0.5 + 0.1;
                 matrixContainer.appendChild(span);
             }
         }
 
-        // Custom Cursor
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX - 10 + 'px';
-            cursor.style.top = e.clientY - 10 + 'px';
-        });
-
-        document.addEventListener('mousedown', () => cursor.classList.add('cursor-grow'));
-        document.addEventListener('mouseup', () => cursor.classList.remove('cursor-grow'));
-
-        // Render Events with Advanced Effects
+        // Render Events
         function renderEvents() {
             const grid = document.getElementById('eventsGrid');
             grid.innerHTML = '';
             
             events.forEach((event, index) => {
                 const card = document.createElement('div');
-                card.className = 'event-card-3d';
-                
-                const delay = index * 0.1;
-                card.style.animation = `slideInFromBottom 0.8s ${delay}s ease-out both`;
+                card.className = 'transform transition-all duration-500 hover:scale-105';
+                card.style.animation = `fadeInUp 0.8s ${index * 0.1}s ease-out both`;
                 
                 card.innerHTML = `
-                    <div class="glass-card rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 h-full">
-                        <div class="bg-gradient-to-br ${event.gradient} p-4 relative">
-                            <div class="absolute top-2 right-2 text-4xl">${event.emoji}</div>
-                            <i class="fas fa-${event.icon} text-4xl text-white/80"></i>
+                    <div class="event-card-premium rounded-xl h-full">
+                        <div class="relative">
+                            <div class="absolute top-2 right-2 z-10">
+                                <span class="badge-premium">
+                                    ${categoryColors[event.category]}
+                                </span>
+                            </div>
+                            <div class="bg-gradient-to-br ${event.gradient} p-6 rounded-t-xl">
+                                <div class="text-5xl text-center mb-2">${event.emoji}</div>
+                                <i class="fas fa-${event.icon} text-3xl text-white/90 text-center block"></i>
+                            </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">${event.title}</h3>
-                            <div class="space-y-2 text-white/80">
-                                <p class="flex items-center">
-                                    <i class="fas fa-calendar mr-2 text-pink-400"></i>
+                        <div class="p-5">
+                            <h3 class="card-title mb-3">${event.title}</h3>
+                            <div class="space-y-2">
+                                <p class="card-text flex items-center">
+                                    <i class="fas fa-calendar icon-gradient mr-2"></i>
                                     ${event.date}
                                 </p>
-                                <p class="flex items-center">
-                                    <i class="fas fa-clock mr-2 text-yellow-400"></i>
+                                <p class="card-text flex items-center">
+                                    <i class="fas fa-clock icon-gradient mr-2"></i>
                                     ${event.time}
                                 </p>
-                                <p class="flex items-center">
-                                    <i class="fas fa-map-marker-alt mr-2 text-cyan-400"></i>
+                                <p class="card-text flex items-center text-sm">
+                                    <i class="fas fa-map-marker-alt icon-gradient mr-2"></i>
                                     ${event.location}
                                 </p>
                             </div>
@@ -769,109 +737,65 @@
                     </div>
                 `;
                 
-                // GSAP Animation on hover
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, {
-                        y: -10,
-                        rotation: 2,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        y: 0,
-                        rotation: 0,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                });
-                
                 grid.appendChild(card);
             });
         }
 
         // Smooth scroll
         document.getElementById('exploreBtn').addEventListener('click', () => {
-            gsap.to(window, {
-                duration: 1.5,
-                scrollTo: "#eventsSection",
-                ease: "power2.inOut"
-            });
+            document.getElementById('eventsSection').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Add slide in animation
+        // Add animation styles
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes slideInFromBottom {
+            @keyframes fadeInUp {
                 from {
                     opacity: 0;
-                    transform: translateY(50px) rotateX(-10deg);
+                    transform: translateY(30px);
                 }
                 to {
                     opacity: 1;
-                    transform: translateY(0) rotateX(0);
+                    transform: translateY(0);
                 }
             }
         `;
         document.head.appendChild(style);
 
-        // Parallax scroll effect
-        let ticking = false;
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.floating-element');
-            
-            parallaxElements.forEach(el => {
-                const speed = 0.5;
-                el.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-            
-            ticking = false;
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestTick);
-
-        // Initialize everything
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initThreeJS();
             initParticles();
             createMatrixRain();
             renderEvents();
             
-            // Add GSAP ScrollTrigger animations
-            gsap.registerPlugin(ScrollTrigger);
-            
-            gsap.from('.event-card-3d', {
-                scrollTrigger: {
-                    trigger: '#eventsSection',
-                    start: 'top 80%',
-                    end: 'bottom 20%',
-                    toggleActions: 'play none none reverse'
-                },
-                y: 100,
-                opacity: 0,
-                stagger: 0.1,
-                duration: 1
-            });
+            // GSAP Animations
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.hero-title', {
+                    duration: 1.5,
+                    y: -50,
+                    opacity: 0,
+                    ease: 'power3.out'
+                });
+                
+                gsap.from('.subtitle-glow', {
+                    duration: 1.5,
+                    y: 50,
+                    opacity: 0,
+                    delay: 0.5,
+                    ease: 'power3.out'
+                });
+            }
         });
 
-        // Add ScrollTrigger plugin
-        const scrollTriggerScript = document.createElement('script');
-        scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
-        document.head.appendChild(scrollTriggerScript);
-
-        const scrollToScript = document.createElement('script');
-        scrollToScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js';
-        document.head.appendChild(scrollToScript);
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.floating');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
     </script>
 </body>
 </html>
